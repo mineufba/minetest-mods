@@ -51,6 +51,23 @@ minetest.register_node(modName .. ":cobogo", {
 })
 ------------------------------------------------------------------
 
+-- COBOGO CERÂMICA
+------------------------------------------------------------------
+minetest.register_alias("cobogo_ceramica", modName .. ":cobogo_ceramica")
+
+minetest.register_node(modName .. ":cobogo_ceramica", {
+    drawtype = "glasslike",
+    description = "Cobogo de Cerâmica",
+    paramtype = "light",
+    is_ground_content = false,
+    sunlight_propagates = true,
+    tiles = {modName .. "_cobogo_ceramica.png"},
+
+    groups = {cracky = 3}
+
+})
+------------------------------------------------------------------
+
 -- TINTA AZUL
 ------------------------------------------------------------------
 minetest.register_alias("tinta_azul", modName .. ":tinta_azul")
