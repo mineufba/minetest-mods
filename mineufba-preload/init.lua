@@ -21,7 +21,7 @@ minetest.register_on_newplayer(function(player)
 
 minetest.register_on_respawnplayer(function(player)
 
-		local pos = {x = 2865.5, y = -39.5, z = -1319.6}
+		local pos = {x = 3010.0, y = -31,0, z = -2360.0}
 
 		player:setpos(pos)
 
