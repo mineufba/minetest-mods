@@ -1,3 +1,6 @@
 [submodule "mtpaint"]
 	path = mtpaint
 	url = https://github.com/mineufba/mtpaint.git
+[submodule "Minetest-WorldEdit"]
+	path = worldwdit_master
+	url = https://github.com/mineufba/Minetest-WorldEdit.git
