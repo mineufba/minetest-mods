@@ -14,7 +14,7 @@ minetest.register_node(modName .. ":pilar", {
              modName .. "_pilar.png",
              modName .. "_pilar.png"},
 
-    groups = {cracky = 3}
+    groups = {oddly_breakable_by_hand = 3}
 
 })
 
@@ -29,7 +29,7 @@ minetest.register_node(modName .. ":concreto", {
     
     tiles = {modName .. "_concreto.png"},
 
-    groups = {cracky = 3}
+    groups = {oddly_breakable_by_hand = 3}
 
 })
 ------------------------------------------------------------------
@@ -46,7 +46,7 @@ minetest.register_node(modName .. ":cobogo", {
     sunlight_propagates = true,
     tiles = {modName .. "_cobogo.png"},
 
-    groups = {cracky = 3}
+    groups = {oddly_breakable_by_hand = 3}
 
 })
 ------------------------------------------------------------------
@@ -63,7 +63,7 @@ minetest.register_node(modName .. ":cobogo_ceramica", {
     sunlight_propagates = true,
     tiles = {modName .. "_cobogo_ceramica.png"},
 
-    groups = {cracky = 3}
+    groups = {oddly_breakable_by_hand = 3}
 
 })
 ------------------------------------------------------------------
@@ -79,7 +79,7 @@ minetest.register_node(modName .. ":tinta_azul", {
     sunlight_propagates = true,
     tiles = {modName .. "_tinta_azul.png"},
 
-    groups = {cracky = 3}
+    groups = {oddly_breakable_by_hand = 3}
 
 })
 ------------------------------------------------------------------
@@ -100,7 +100,7 @@ minetest.register_node(modName .. ":telhado", {
              modName .. "_concreto.png",
              modName .. "_concreto.png"},
 
-    groups = {cracky = 3}
+    groups = {oddly_breakable_by_hand = 3}
 
 })
 ------------------------------------------------------------------
