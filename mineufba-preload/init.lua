@@ -11,6 +11,7 @@ minetest.register_on_newplayer(function(player)
 		privs.bring = false
 		privs.fast = false
 		privs.fly = false
+		privs.interact = false;
 
 		minetest.set_player_privs(name, privs)	
 
