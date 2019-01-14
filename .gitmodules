@@ -4,3 +4,6 @@
 [submodule "Minetest-WorldEdit"]
 	path = worldwdit_master
 	url = https://github.com/mineufba/Minetest-WorldEdit.git
+[submodule "unified_inventory"]
+	path = unified_inventory
+	url = https://github.com/mineufba/unified_inventory.git
