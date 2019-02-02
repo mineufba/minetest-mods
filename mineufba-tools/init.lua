@@ -217,14 +217,14 @@ minetest.register_tool(modName .. ":extrude_y", {
     if pointed_thing.type == "node" then      
       pos = pointed_thing.under
       nodeName = minetest.get_node(pos).name
-      tools.extrude_y(pos, 1, nodeName, false, false, tool_intensity, true);
+      tools.extrude_y(pos, -1, nodeName, false, false, tool_intensity, true);
     end
   end,
   on_place = function(itemstack, user, pointed_thing)
     if pointed_thing.type == "node" then        
       pos = pointed_thing.under
       nodeName = minetest.get_node(pos).name
-      tools.extrude_y(pos, -1, nodeName, false, false, tool_intensity, true);
+      tools.extrude_y(pos, 1, nodeName, false, false, tool_intensity, true);
     end
   end
 })
