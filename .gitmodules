@@ -7,3 +7,6 @@
 [submodule "unified_inventory"]
 	path = unified_inventory
 	url = https://github.com/mineufba/unified_inventory.git
+[submodule "areas"]
+	path = areas
+	url = https://github.com/mineufba/areas.git
