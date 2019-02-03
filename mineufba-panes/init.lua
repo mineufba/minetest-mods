@@ -14,6 +14,7 @@ minetest.register_node(mod_name .. ":brise_top", {
         mod_name .. "_default.png"
     },
     groups = {oddly_breakable_by_hand = 3},
+    paramtype2 = "facedir",
     drawtype = "nodebox",
     paramtype = "light",
     node_box = {
@@ -41,6 +42,7 @@ minetest.register_node(mod_name .. ":brise_bottom", {
         mod_name .. "_default.png"
     },
     groups = {oddly_breakable_by_hand = 3},
+    paramtype2 = "facedir",
     drawtype = "nodebox",
     paramtype = "light",
     node_box = {
@@ -71,6 +73,7 @@ minetest.register_node(mod_name .. ":grade_top_side", {
     },
     drawtype = "nodebox",
     groups = {oddly_breakable_by_hand = 3},
+    paramtype2 = "facedir",
     paramtype = "light",
     node_box = {
         type = "fixed",
@@ -96,6 +99,7 @@ minetest.register_node(mod_name .. ":grade_top", {
     },
     drawtype = "nodebox",
     groups = {oddly_breakable_by_hand = 3},
+    paramtype2 = "facedir",
     paramtype = "light",
     node_box = {
         type = "fixed",
@@ -120,6 +124,7 @@ minetest.register_node(mod_name .. ":grade_middle", {
     },
     drawtype = "nodebox",
     groups = {oddly_breakable_by_hand = 3},
+    paramtype2 = "facedir",
     paramtype = "light",
     node_box = {
         type = "fixed",
