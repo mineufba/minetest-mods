@@ -5,6 +5,7 @@ local mod_name = "mineufba_panes"
 minetest.register_alias("brise", mod_name .. ":brise")
 
 minetest.register_node(mod_name .. ":brise", {
+	description = "Brise",
     tiles = {
         mod_name .. "_default.png",
         mod_name .. "_default.png",
@@ -38,67 +39,12 @@ minetest.register_node(mod_name .. ":brise", {
     }
 })
 
--- minetest.register_alias("brise_top", mod_name .. ":brise_top")
-
--- minetest.register_node(mod_name .. ":brise_top", {
---     tiles = {
---         mod_name .. "_default.png",
---         mod_name .. "_default.png",
---         mod_name .. "_default.png",
---         mod_name .. "_default.png",
---         mod_name .. "_default.png",
---         mod_name .. "_default.png"
---     },
---     groups = {oddly_breakable_by_hand = 3},
---     paramtype2 = "facedir",
---     drawtype = "nodebox",
---     paramtype = "light",
---     node_box = {
---         type = "fixed",
---         fixed = {
---             {-0.5, 0.375, -0.5, -0.4375, 0.5, 0.5}, 
---             {-0.4375, 0.25, -0.5, -0.375, 0.375, 0.5}, 
---             {-0.3125, 0, -0.5, -0.25, 0.125, 0.5}, 
---             {-0.25, -0.125, -0.5, -0.1875, 0, 0.5}, 
---             {-0.125, -0.375, -0.5, -0.0625, -0.25, 0.5}, 
---             {-0.0625, -0.5, -0.5, 0, -0.375, 0.5}, 
---         }
---     }
--- })
-
--- minetest.register_alias("brise_bottom", mod_name .. ":brise_bottom")
-
--- minetest.register_node(mod_name .. ":brise_bottom", {
---     tiles = {
---         mod_name .. "_default.png",
---         mod_name .. "_default.png",
---         mod_name .. "_default.png",
---         mod_name .. "_default.png",
---         mod_name .. "_default.png",
---         mod_name .. "_default.png"
---     },
---     groups = {oddly_breakable_by_hand = 3},
---     paramtype2 = "facedir",
---     drawtype = "nodebox",
---     paramtype = "light",
---     node_box = {
---         type = "fixed",
---         fixed = {
---             {0.125, 0.125, -0.5, 0.1875, 0.25, 0.5}, -- NodeBox1
---             {0.0625, 0.25, -0.5, 0.125, 0.375, 0.5}, -- NodeBox4
---             {0.3125, -0.25, -0.5, 0.375, -0.125, 0.5}, -- NodeBox5
---             {0.25, -0.125, -0.5, 0.3125, 0, 0.5}, -- NodeBox6
---             {0.375, -0.5, -0.5, 0.4375, -0.375, 0.5}, -- NodeBox8
---         }
---     }
-
--- })
-
 -- Grade --------------------------------------------------------------------------------------
 
 minetest.register_alias("grade_top_side", mod_name .. ":grade_top_side")
 
 minetest.register_node(mod_name .. ":grade_top_side", {
+	description = "Grade Top Side",
     tiles = {
         mod_name .. "_default.png",
         mod_name .. "_default.png",
@@ -125,6 +71,7 @@ minetest.register_node(mod_name .. ":grade_top_side", {
 minetest.register_alias("grade_top", mod_name .. ":grade_top")
 
 minetest.register_node(mod_name .. ":grade_top", {
+	description = "Grade Top",
     tiles = {
         mod_name .. "_default.png",
         mod_name .. "_default.png",
@@ -150,6 +97,7 @@ minetest.register_node(mod_name .. ":grade_top", {
 minetest.register_alias("grade_middle", mod_name .. ":grade_middle")
 
 minetest.register_node(mod_name .. ":grade_middle", {
+	description = "Grade Middle",
     tiles = {
         mod_name .. "_default.png",
         mod_name .. "_default.png",
@@ -174,6 +122,7 @@ minetest.register_node(mod_name .. ":grade_middle", {
 minetest.register_alias("grade_side", mod_name .. ":grade_side")
 
 minetest.register_node(mod_name .. ":grade_side", {
+	description = "Grade Side",
     tiles = {
         mod_name .. "_default.png",
         mod_name .. "_default.png",
