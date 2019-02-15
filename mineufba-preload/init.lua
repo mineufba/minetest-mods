@@ -28,3 +28,30 @@ minetest.register_on_respawnplayer(function(player)
 		return true
 
 	end)
+
+minetest.register_on_dignode(function(pos, oldnode, digger)
+
+		local inv = digger:get_inventory()
+		local listName = digger:get_wield_list()
+
+		local searchStack = {name = oldnode.name, count = 2}
+
+		if (inv:contains_item(listName, searchStack)) then 
+
+			inv:remove_item(listName, {name = oldnode.name, count = 1})
+
+		end
+
+	end)
+
+minetest.register_on_placenode(function(pos, newnode, placer, oldnode, itemstack, pointed_thing)
+
+		if (itemstack ~= nil) then
+			
+			itemstack:set_count(1)
+
+		end
+
+		return true
+
+	end)
