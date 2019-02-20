@@ -12,17 +12,25 @@ minetest.register_tool(modName .. ":brush", {
 
   on_place = function(itemstack, user, pointed_thing)
 
-
     if pointed_thing.type == "node" then 
 
-      local fromNode = user:get_inventory():get_stack("main", 1):get_name()
-      local toNode = user:get_inventory():get_stack("main", 2):get_name()
+      local fromNode = user:get_inventory():get_stack("main", 1)
+      local toNode = user:get_inventory():get_stack("main", 2)
+
+      if fromNode:get_definition().type ~= "node" then return end
+      if toNode:get_definition().type ~= "node" then return end
+
+      fromNode = fromNode:get_name()
+      toNode = toNode:get_name()
 
       local pos = pointed_thing.under
       local pointedNode = minetest.get_node(pos)
 
       if (fromNode and toNode and pointedNode) then
-	      painting_tools.brush(user, fromNode, toNode, pointedNode, pos, tools.intensity)
+
+      	  rollback.used_tool(user)
+
+	      painting_tools.brush(user, fromNode, toNode, pos, tools.intensity[user:get_player_name()])
 	  end
 
     end
@@ -31,56 +39,32 @@ minetest.register_tool(modName .. ":brush", {
 
 -- Methods -----------------------------------------------------------
 
-painting_tools.brush = function (player, fromNode, toNode, pointedNode, pos, loop)
+painting_tools.brush = function (player, fromNode, toNode, pos, loop)
+	
+	if (not base_functions.canPlayerPlaceAt(player, pos)) then return end
 
-	if (tools.is_pos_air(pos) or (pointedNode.name ~= fromNode)) then return end
+	local pointedNode = minetest.get_node(pos)
 
-	-- If there's air in any side of the block
-	local isVisible = false
+	if (pointedNode == nil or base_functions.is_pos_air(pos) or (pointedNode.name ~= fromNode)) then return end
 
-	for i=-1,1,2 do
-		if (isVisible) then break end
+	local faceDir = base_functions.getPlayerLookDir(player)
 
-		isVisible = tools.is_pos_air({x=pos.x+i,y=pos.y,z=pos.z})
-	end
-	for j=-1,1,2 do
-		if (isVisible) then break end
-
-		isVisible = tools.is_pos_air({x=pos.x,y=pos.y+j,z=pos.z})
-	end
-	for k=-1,1,2 do
-		if (isVisible) then break end
-
-		isVisible = tools.is_pos_air({x=pos.x,y=pos.y,z=pos.z+k})
-	end
+	local isVisible = base_functions.hasAirInDirs(pos, {x=faceDir.x*-1, y=faceDir.y*-1, z=faceDir.z*-1})
 
 	if (not isVisible) then return end
 
 	local newNode = {name=toNode, param2=pointedNode.param2}
-
-	minetest.set_node(pos, newNode)
-
+	
+	rollback.set_node(player, pos, newNode)
+	
 	if (loop > 1) then
 
-		print("next")
-
-		loop = loop - 1
-
-		for i=-1,1,1 do
-			for j=-1,1,1 do
-				for k=-1,1,1 do
-
-					local newPos = {
-						x = pos.x + i,
-						y = pos.y + j,
-						z = pos.z + k
-					}
-
-					painting_tools.brush(player, fromNode, toNode, pointedNode, newPos, loop)
-				end
-			end	
-		end
+	    painting_tools.brush(player, fromNode, toNode, {x = pos.x,	y = pos.y, z = pos.z - 1}, loop - 1)
+	    painting_tools.brush(player, fromNode, toNode, {x = pos.x,	y = pos.y, z = pos.z + 1}, loop - 1)
+	    painting_tools.brush(player, fromNode, toNode, {x = pos.x,	y = pos.y - 1, z = pos.z}, loop - 1)
+	    painting_tools.brush(player, fromNode, toNode, {x = pos.x,	y = pos.y + 1, z = pos.z}, loop - 1)
+	    painting_tools.brush(player, fromNode, toNode, {x = pos.x - 1,	y = pos.y, z = pos.z}, loop - 1)
+	    painting_tools.brush(player, fromNode, toNode, {x = pos.x + 1,	y = pos.y, z = pos.z}, loop - 1)
 	end
-
 
 end

@@ -6,14 +6,14 @@ minetest.register_alias("plant_tree", modName .. ":plant_tree")
 
 -- Methods -----------------------------------------------------------
 
-terrain_tools.plant_tree = function (pointed_thing, pos)
+terrain_tools.plant_tree = function (player, pos)
 	
-	if pointed_thing.type ~= "node" then return end
-
+	if (not base_functions.canPlayerPlaceAt(player, pos)) then return end
+	
 	for i=1,5 do
 
 		pos.y = pos.y + 1
-		minetest.set_node(pos, {name="default:tree"})
+		rollback.set_node(player, pos, {name="default:tree"})
 
 	end
 
@@ -30,7 +30,7 @@ terrain_tools.plant_tree = function (pointed_thing, pos)
 				
 				if (i == 3 or (j ~= 2 or k ~= 2)) then
 
-					minetest.set_node(pos, {name="default:leaves"})
+					rollback.set_node(player, pos, {name="default:leaves"})
 
 				end
 
@@ -48,6 +48,26 @@ terrain_tools.plant_tree = function (pointed_thing, pos)
 
 end
 
+terrain_tools.remove_tree = function (player, pos)
+	
+	if (not base_functions.canPlayerPlaceAt(player, pos)) then return end
+	
+	local node = minetest.get_node(pos)
+
+	if (node.name == "default:tree" or node.name == "default:leaves") then
+
+		rollback.set_node(player, pos, {name="air"})
+
+		terrain_tools.remove_tree(player, {x = pos.x + 1, y = pos.y, z = pos.z})
+		terrain_tools.remove_tree(player, {x = pos.x - 1, y = pos.y, z = pos.z})
+		terrain_tools.remove_tree(player, {x = pos.x, y = pos.y + 1, z = pos.z})
+		terrain_tools.remove_tree(player, {x = pos.x, y = pos.y - 1, z = pos.z})
+		terrain_tools.remove_tree(player, {x = pos.x, y = pos.y - 1, z = pos.z + 1})
+		terrain_tools.remove_tree(player, {x = pos.x, y = pos.y - 1, z = pos.z - 1})
+
+	end
+end
+
 -- Register Tools ----------------------------------------------------
 
 minetest.register_tool(modName .. ":plant_tree", {
@@ -55,12 +75,18 @@ minetest.register_tool(modName .. ":plant_tree", {
   inventory_image = modName .. "_plant_tree.png",
   on_use = function(itemstack, user, pointed_thing)
     
-    terrain_tools.plant_tree(pointed_thing, pointed_thing.under)
+  	if pointed_thing.type ~= "node" then return end
+
+    rollback.used_tool(user)
+    terrain_tools.plant_tree(user, pointed_thing.under)
 
   end,
   on_place = function(itemstack, user, pointed_thing)
     
-    terrain_tools.plant_tree(pointed_thing, pointed_thing.under)
+    if pointed_thing.type ~= "node" then return end
+
+    rollback.used_tool(user)
+    terrain_tools.remove_tree(user, pointed_thing.under)
 
   end
 })
