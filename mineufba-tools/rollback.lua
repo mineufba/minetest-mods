@@ -4,15 +4,23 @@ rollback.logFolder = minetest.get_modpath(modName) .. "/rollback_log/"
 
 rollback.used_tool = function (player)
 	
-	rollback.clear_file(player)
+	local name = player:get_player_name()
+
+	rollback[player:get_player_name()].count = rollback[player:get_player_name()].count + 1
+
+	os.execute("touch " .. rollback.logFolder .. name .. "/" .. rollback[player:get_player_name()].count)
 
 end
 
 rollback.set_node = function (player, pos, node)
-	
-	oldNode = minetest.get_node(pos)
 
-	local logFile = io.open(rollback.logFolder .. player:get_player_name(), "a")
+	local oldNode = minetest.get_node(pos)
+
+	local name = player:get_player_name()
+
+	local logFile = io.open(rollback.logFolder .. name .. "/" .. rollback[player:get_player_name()].count, "a")
+
+	if (logFile == nil) then print("rollback.set_node - Couldn't open file: " .. rollback.logFolder .. name .. "/" .. rollback[player:get_player_name()].count) return end
 
 	logFile:write(pos.x .. ";" .. pos.y .. ";" .. pos.z .. ";" .. oldNode.name .. ";" .. oldNode.param2 .. "\n")
 
@@ -24,22 +32,27 @@ end
 
 rollback.clear_file = function (player)
 	
-	local logFile = io.open(rollback.logFolder .. player:get_player_name(), "w")
+	local name = player:get_player_name()
 
-	logFile:write("")
+	os.execute("rm " .. rollback.logFolder .. name .. "/" .. rollback[player:get_player_name()].count)
 
-	logFile:close()
+	rollback[player:get_player_name()].count = rollback[player:get_player_name()].count - 1
 end
 
 minetest.register_on_joinplayer(function (player)
 	
-	rollback.clear_file(player);
+	os.execute("mkdir " .. rollback.logFolder .. player:get_player_name())
+
+	rollback[player:get_player_name()] = {}
+
+	rollback[player:get_player_name()].count = 0 -- Current file number (0 is no file)
+	rollback[player:get_player_name()].min = 1   -- Oldest possible file number
 
 end)
 
 minetest.register_on_leaveplayer(function (player)
 	
-	os.remove(rollback.logFolder .. player:get_player_name());
+	os.execute("rm -rf " .. rollback.logFolder .. player:get_player_name());
 
 end)
 
@@ -59,10 +72,14 @@ minetest.register_chatcommand("undo", {
 })
 
 rollback.reset_changes = function (player)
+	
+	if (rollback[player:get_player_name()].count < rollback[player:get_player_name()].min) then return end
 
-	lines = {}
+	local lines = {}
 
-	for line in io.lines(rollback.logFolder .. player:get_player_name()) do
+	local name = player:get_player_name()
+
+	for line in io.lines(rollback.logFolder .. name .. "/" .. rollback[player:get_player_name()].count) do
 		lines[#lines + 1] = line
 	end
 
