@@ -1,2 +1,5 @@
 mineufba-tools/rollback_log/*
 !mineufba-tools/rollback_log/log.txt
+
+mineufba-packs/packs/*
+!mineufba-packs/packs/default.log
