@@ -22,10 +22,7 @@ end
 
 packs_api.destroy_pack = function (playerName, packName)
 	
-	if (not files.exists(packs_api.folderName .. packName)) then 
-		minetest.chat_send_player(playerName, "Pack doesn't exist!")
-		return false
-	end
+	if (not packs.exists(playerName, packName)) then return end
 
 	if (os.remove(packs_api.folderName .. packName)) then
 
@@ -38,17 +35,36 @@ packs_api.destroy_pack = function (playerName, packName)
 	end
 end
 
+packs_api.add_inventory_to_pack = function (player, packName) 
+	
+	if (not packs.exists(playerName, packName)) then return end
+
+	local playerName = player:get_player_name()
+	
+	local inv = player:get_inventory()
+
+	local size = inv:get_size("main")
+
+	for i=1,size do
+
+		local stack = inv:get_stack("main", i)
+
+		packs_api.add_to_pack(playerName, packName, stack:get_name())
+
+	end
+
+end
+
 packs_api.add_to_pack = function (playerName, packName, itemName)
 	
-	if (not files.exists(packs_api.folderName .. packName)) then 
-		minetest.chat_send_player(playerName, "Pack doesn't exist!")
-		return false
-	end
+	if (itemName == "") then return end
+
+	if (not packs.exists(playerName, packName)) then return end
 
 	for line in io.lines(packs_api.folderName .. packName) do
 
 		if (line == itemName) then
-			minetest.chat_send_player(playerName, "Pack already contains item!")
+			minetest.chat_send_player(playerName, "Pack " .. '"' .. packName .. '"' .. " already contains " .. '"' .. itemName .. '"' .. "!")
 			return false
 		end
 	end
@@ -63,17 +79,14 @@ packs_api.add_to_pack = function (playerName, packName, itemName)
 	file:write(itemName .. "\n")
 	file:close()
 
-	minetest.chat_send_player(playerName, "Item added!")
+	minetest.chat_send_player(playerName, '"' .. itemName .. '"' .. " added to " .. '"' .. packName .. '"' .. "!")
 	return true
 
 end
 
 packs_api.delete_from_pack = function (playerName, packName, itemName)
 	
-	if (not files.exists(packs_api.folderName .. packName)) then 
-		minetest.chat_send_player(playerName, "Pack doesn't exist!")
-		return false
-	end
+	if (not packs.exists(playerName, packName)) then return end
 
 	local contains = false
 
@@ -88,31 +101,60 @@ packs_api.delete_from_pack = function (playerName, packName, itemName)
 
 	if (contains) then
 
-		local file = io.open(packs_api.folderName .. packName, "rw")
-
-		local content = file:read("*all")
-
-		content:gsub(itemName, "")
-
-		file:write(content)
-
-		file:close()
+		os.execute("grep -vwE " .. '"' .. itemName .. '"' .. " " .. packs_api.folderName .. packName .. " > pack_save")
+		os.execute("mv pack_save " .. packs_api.folderName .. packName)
+	
+		minetest.chat_send_player(playerName, "Item removed!")
 
 	else
 
 		minetest.chat_send_player(playerName, "Pack doesn't contain item!")
+	
 	end
 		
 	return contains	
 
 end
 
-packs_api.use_pack = function ()
+packs_api.get_pack = function (player, packName)
+	
+	if (player == nil or packName == "") then return end
+
+	local inv = player:get_inventory()
+
+	for line in io.lines(packs_api.folderName .. packName) do
+
+		inv:add_item("main", {name=line, count=1})
+
+	end
+
+end
+
+packs_api.show_pack_content = function (playerName, packName)
+	
+	if (not packs.exists(playerName, packName)) then return end
+
+	minetest.chat_send_player(playerName, "Pack " .. packName .. ":" )
+	
+	for line in io.lines(packs_api.folderName .. packName) do
+
+		minetest.chat_send_player(playerName, line)
+
+	end
+end
+
+packs_api.list_all_packs = function ()
 	
 end
 
-packs_api.list_packs = function ()
+packs.exists = function (playerName, packName)
 	
+	if (not files.exists(packs_api.folderName .. packName)) then 
+		minetest.chat_send_player(playerName, "Pack doesn't exist!")
+		return false
+	end
+
+	return true
 end
 
 -- Methods

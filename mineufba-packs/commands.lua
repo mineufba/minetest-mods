@@ -72,6 +72,23 @@ minetest.register_chatcommand("packs_add_item", {
 	end,
 })
 
+minetest.register_chatcommand("packs_add_inventory", {
+	params = "Pack name",
+	description = "Adds all items from player inventory to pack.",
+	privs = {mineufba_packs = true},
+
+	func = function(playerName, param)
+
+		if (param == "") then
+			minetest.chat_send_player(playerName, "Params not specified")
+			return
+		end	
+
+		return packs_api.add_inventory_to_pack(minetest.get_player_by_name(playerName), param) 
+
+	end
+})
+
 minetest.register_chatcommand("packs_remove_item", {
 	params = "Pack name and item name",
 	description = "Adds item to pack.",
@@ -105,5 +122,35 @@ minetest.register_chatcommand("packs_remove_item", {
 		end			
 
 		return packs_api.delete_from_pack(playerName, packName, itemName) 
+	end,
+})
+
+minetest.register_chatcommand("packs_get", {
+	params = "Pack name",
+	description = "Adds items from pack to inventory.",
+
+	func = function(playerName, param)
+
+		if (param == "") then
+			minetest.chat_send_player(playerName, "Params not specified")
+			return
+		end	
+
+		return packs_api.get_pack(minetest.get_player_by_name(playerName), param) 
+	end,
+})
+
+minetest.register_chatcommand("packs_show", {
+	params = "Pack name",
+	description = "List items in pack.",
+
+	func = function(playerName, param)
+
+		if (param == "") then
+			minetest.chat_send_player(playerName, "Params not specified")
+			return
+		end	
+
+		return packs_api.show_pack_content(playerName, param) 
 	end,
 })
