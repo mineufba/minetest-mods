@@ -49,7 +49,7 @@ painting_tools.brush = function (player, fromNode, toNode, pos, loop)
 
 	local faceDir = base_functions.getPlayerLookDir(player)
 
-	local isVisible = base_functions.hasAirInDirs(pos, {x=faceDir.x*-1, y=faceDir.y*-1, z=faceDir.z*-1})
+	local isVisible = base_functions.hasAirInDirs(pos, {x=faceDir.x, y=faceDir.y*-1, z=faceDir.z})
 
 	if (not isVisible) then return end
 
