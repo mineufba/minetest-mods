@@ -1,5 +1,7 @@
 rollback = {}
 
+rollback.limit = 30
+
 rollback.logFolder = minetest.get_modpath(modName) .. "/rollback_log/"	
 
 rollback.used_tool = function (player)
@@ -9,6 +11,14 @@ rollback.used_tool = function (player)
 	rollback[player:get_player_name()].count = rollback[player:get_player_name()].count + 1
 
 	os.execute("touch " .. rollback.logFolder .. name .. "/" .. rollback[player:get_player_name()].count)
+
+	if (rollback[player:get_player_name()].count - rollback[player:get_player_name()].min >= rollback.limit) then
+
+		os.execute("rm " .. rollback.logFolder .. name .. "/" .. rollback[player:get_player_name()].min)
+
+		rollback[player:get_player_name()].min = rollback[player:get_player_name()].min + 1		
+
+	end
 
 end
 
@@ -34,9 +44,16 @@ rollback.clear_file = function (player)
 	
 	local name = player:get_player_name()
 
-	os.execute("rm " .. rollback.logFolder .. name .. "/" .. rollback[player:get_player_name()].count)
+	os.execute("rm " .. rollback.logFolder .. name .. "/" .. rollback[name].count)
 
-	rollback[player:get_player_name()].count = rollback[player:get_player_name()].count - 1
+	rollback[name].count = rollback[name].count - 1
+
+	if (rollback[name].count < rollback[name].min) then
+
+		rollback[name].count = 0
+		rollback[name].min = 1
+
+	end
 end
 
 minetest.register_on_joinplayer(function (player)
@@ -57,8 +74,8 @@ minetest.register_on_leaveplayer(function (player)
 end)
 
 minetest.register_chatcommand("undo", {
-	params = "",
-	description = "Resets last modification made by a tool used by the player",
+	params = "Times to undo",
+	description = "Resets last n modifications made by a tool used by the player",
 	func = function(name, param)
 		
 		local player = minetest.get_player_by_name(name)
@@ -66,7 +83,17 @@ minetest.register_chatcommand("undo", {
 			return false, "Player not found"
 		end
 		
-		rollback.reset_changes(player)
+		local times = tonumber(param)
+
+		if (times == nil) then times = 1 end
+
+		if (times > rollback.limit) then times = rollback.limit end
+
+		for i=1,times do
+
+			rollback.reset_changes(player)
+		end
+
 
 	end
 })
