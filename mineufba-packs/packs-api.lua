@@ -124,7 +124,13 @@ packs_api.get_pack = function (player, packName)
 
 	for line in io.lines(packs_api.folderName .. packName) do
 
-		inv:add_item("main", {name=line, count=1})
+		local stk = {name=line, count=1}
+
+		if (not inv:contains_item("main", stk)) then
+
+			inv:add_item("main", stk)
+
+		end
 
 	end
 
