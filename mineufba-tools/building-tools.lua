@@ -7,7 +7,7 @@ minetest.register_alias("extrude_x_z", modName .. ":extrude_x_z")
 
 -- Functions ---------------------------------------------------------------------------------
 
-building_tools.extrude_y = function (player, position, direction, nodeInfo, isSure, remove, loop)
+building_tools.extrude_y = function (player, position, direction, nodeInfo, isSure, remove, loop, first)
   
   if (base_functions.is_pos_air(position) or minetest.get_node(position).name ~= nodeInfo.name) then return end 
 
@@ -31,26 +31,27 @@ building_tools.extrude_y = function (player, position, direction, nodeInfo, isSu
       
       rollback.set_node(player, p, {name=nodeInfo.name, param2=nodeInfo.param2})
 
-      p = {x = position.x+1,
-           y = position.y,
-           z = position.z}
-      building_tools.extrude_y(player, p, direction, nodeInfo, isSure, remove, loop)
+      if (first) then
+        p = {x = position.x+1,
+             y = position.y,
+             z = position.z}
+        building_tools.extrude_y(player, p, direction, nodeInfo, isSure, remove, loop, first)
 
-      p = {x = position.x-1,
-           y = position.y,
-           z = position.z}
-      building_tools.extrude_y(player, p, direction, nodeInfo, isSure, remove, loop)
+        p = {x = position.x-1,
+             y = position.y,
+             z = position.z}
+        building_tools.extrude_y(player, p, direction, nodeInfo, isSure, remove, loop, first)
 
-      p = {x = position.x,
-           y = position.y,
-           z = position.z+1}
-      building_tools.extrude_y(player, p, direction, nodeInfo, isSure, remove, loop)
+        p = {x = position.x,
+             y = position.y,
+             z = position.z+1}
+        building_tools.extrude_y(player, p, direction, nodeInfo, isSure, remove, loop, first)
 
-      p = {x = position.x,
-           y = position.y,
-           z = position.z-1}
-      building_tools.extrude_y(player, p, direction, nodeInfo, isSure, remove, loop)
-
+        p = {x = position.x,
+             y = position.y,
+             z = position.z-1}
+        building_tools.extrude_y(player, p, direction, nodeInfo, isSure, remove, loop, first)
+      end
     end
   else
 
@@ -62,25 +63,27 @@ building_tools.extrude_y = function (player, position, direction, nodeInfo, isSu
 
       rollback.set_node(player, position, {name="air"})
 
-      p = {x = position.x+1,
-           y = position.y,
-           z = position.z}
-      building_tools.extrude_y(player, p, direction, nodeInfo, isSure, remove, loop)
+      if (first) then
+        p = {x = position.x+1,
+             y = position.y,
+             z = position.z}
+        building_tools.extrude_y(player, p, direction, nodeInfo, isSure, remove, loop, first)
 
-      p = {x = position.x-1,
-           y = position.y,
-           z = position.z}
-      building_tools.extrude_y(player, p, direction, nodeInfo, isSure, remove, loop)
+        p = {x = position.x-1,
+             y = position.y,
+             z = position.z}
+        building_tools.extrude_y(player, p, direction, nodeInfo, isSure, remove, loop, first)
 
-      p = {x = position.x,
-           y = position.y,
-           z = position.z+1}
-      building_tools.extrude_y(player, p, direction, nodeInfo, isSure, remove, loop)
+        p = {x = position.x,
+             y = position.y,
+             z = position.z+1}
+        building_tools.extrude_y(player, p, direction, nodeInfo, isSure, remove, loop, first)
 
-      p = {x = position.x,
-           y = position.y,
-           z = position.z-1}
-      building_tools.extrude_y(player, p, direction, nodeInfo, isSure, remove, loop)  
+        p = {x = position.x,
+             y = position.y,
+             z = position.z-1}
+        building_tools.extrude_y(player, p, direction, nodeInfo, isSure, remove, loop, first)  
+      end
     end
   end
 
@@ -89,13 +92,13 @@ building_tools.extrude_y = function (player, position, direction, nodeInfo, isSu
        z = position.z}
 
   if (minetest.get_node(p).name == nodeInfo.name and loop >= 2) then
-    building_tools.extrude_y(player, p, direction, nodeInfo, isSure, remove, (loop - 1))
+    building_tools.extrude_y(player, p, direction, nodeInfo, isSure, remove, (loop- 1), false)
   end
 end
 
 ----------------------------------------------------
 
-building_tools.extrude_x_z = function (player, position, direction, nodeInfo, isSure, remove, side, loop)
+building_tools.extrude_x_z = function (player, position, direction, nodeInfo, isSure, remove, side, loop, first)
 
   if (base_functions.is_pos_air(position) or minetest.get_node(position).name ~= nodeInfo.name) then return end 
 
@@ -130,26 +133,27 @@ building_tools.extrude_x_z = function (player, position, direction, nodeInfo, is
 
       rollback.set_node(player, p, {name=nodeInfo.name, param2=nodeInfo.param2})
 
-      p = {x = position.x+side.z,
-           y = position.y,
-           z = position.z+side.x}
-      building_tools.extrude_x_z(player, p, direction, nodeInfo, isSure, remove, side, loop)
+      if (first) then
+        p = {x = position.x+side.z,
+             y = position.y,
+             z = position.z+side.x}
+        building_tools.extrude_x_z(player, p, direction, nodeInfo, isSure, remove, side, loop, first)
 
-      p = {x = position.x-side.z,
-           y = position.y,
-           z = position.z-side.x}
-      building_tools.extrude_x_z(player, p, direction, nodeInfo, isSure, remove, side, loop)
+        p = {x = position.x-side.z,
+             y = position.y,
+             z = position.z-side.x}
+        building_tools.extrude_x_z(player, p, direction, nodeInfo, isSure, remove, side, loop, first)
 
-      p = {x = position.x,
-           y = position.y+1,
-           z = position.z}
-      building_tools.extrude_x_z(player, p, direction, nodeInfo, isSure, remove, side, loop)
+        p = {x = position.x,
+             y = position.y+1,
+             z = position.z}
+        building_tools.extrude_x_z(player, p, direction, nodeInfo, isSure, remove, side, loop, first)
 
-      p = {x = position.x,
-           y = position.y-1,
-           z = position.z}
-      building_tools.extrude_x_z(player, p, direction, nodeInfo, isSure, remove, side, loop)
-    
+        p = {x = position.x,
+             y = position.y-1,
+             z = position.z}
+        building_tools.extrude_x_z(player, p, direction, nodeInfo, isSure, remove, side, loop, first)
+      end
     end
 
   else
@@ -162,26 +166,27 @@ building_tools.extrude_x_z = function (player, position, direction, nodeInfo, is
 
       rollback.set_node(player, position, {name="air"})
 
-      p = {x = position.x+side.z,
-           y = position.y,
-           z = position.z+side.x}
-      building_tools.extrude_x_z(player, p, direction, nodeInfo, isSure, remove, side, loop)
+      if (first) then
+        p = {x = position.x+side.z,
+             y = position.y,
+             z = position.z+side.x}
+        building_tools.extrude_x_z(player, p, direction, nodeInfo, isSure, remove, side, loop, first)
 
-      p = {x = position.x-side.z,
-           y = position.y,
-           z = position.z-side.x}
-      building_tools.extrude_x_z(player, p, direction, nodeInfo, isSure, remove, side, loop)
+        p = {x = position.x-side.z,
+             y = position.y,
+             z = position.z-side.x}
+        building_tools.extrude_x_z(player, p, direction, nodeInfo, isSure, remove, side, loop, first)
 
-      p = {x = position.x,
-           y = position.y+1,
-           z = position.z}
-      building_tools.extrude_x_z(player, p, direction, nodeInfo, isSure, remove, side, loop)
+        p = {x = position.x,
+             y = position.y+1,
+             z = position.z}
+        building_tools.extrude_x_z(player, p, direction, nodeInfo, isSure, remove, side, loop, first)
 
-      p = {x = position.x,
-           y = position.y-1,
-           z = position.z}
-      building_tools.extrude_x_z(player, p, direction, nodeInfo, isSure, remove, side, loop)
-
+        p = {x = position.x,
+             y = position.y-1,
+             z = position.z}
+        building_tools.extrude_x_z(player, p, direction, nodeInfo, isSure, remove, side, loop, first)
+      end
     end
   end
 
@@ -190,7 +195,7 @@ building_tools.extrude_x_z = function (player, position, direction, nodeInfo, is
        z = position.z+direction.z}
 
   if (minetest.get_node(p).name == nodeInfo.name and loop >= 2) then
-    building_tools.extrude_x_z(player, p, direction, nodeInfo, isSure, remove, side, (loop - 1))
+    building_tools.extrude_x_z(player, p, direction, nodeInfo, isSure, remove, side, (loop - 1), false)
   end
 
 end
@@ -206,7 +211,7 @@ minetest.register_tool(modName .. ":extrude_y", {
       nodeInfo = minetest.get_node(pos)
 
       rollback.used_tool(user)
-      building_tools.extrude_y(user, pos, -1, nodeInfo, false, false, tools.intensity[user:get_player_name()]);
+      building_tools.extrude_y(user, pos, -1, nodeInfo, false, false, tools.intensity[user:get_player_name()], true);
     end
   end,
   on_place = function(itemstack, user, pointed_thing)
@@ -215,7 +220,7 @@ minetest.register_tool(modName .. ":extrude_y", {
       nodeInfo = minetest.get_node(pos)
 
       rollback.used_tool(user)
-      building_tools.extrude_y(user, pos, 1, nodeInfo, false, false, tools.intensity[user:get_player_name()]);
+      building_tools.extrude_y(user, pos, 1, nodeInfo, false, false, tools.intensity[user:get_player_name()], true);
     end
   end
 })
@@ -232,7 +237,7 @@ minetest.register_tool(modName .. ":extrude_x_z", {
       nodeInfo = minetest.get_node(pos)
 
       rollback.used_tool(user)
-      building_tools.extrude_x_z(user, pos, 1, nodeInfo, false, false, dir, tools.intensity[user:get_player_name()]);
+      building_tools.extrude_x_z(user, pos, 1, nodeInfo, false, false, dir, tools.intensity[user:get_player_name()], true);
     end
   end,
   on_place = function(itemstack, user, pointed_thing)
@@ -244,7 +249,7 @@ minetest.register_tool(modName .. ":extrude_x_z", {
       nodeInfo = minetest.get_node(pos)
 
       rollback.used_tool(user)
-      building_tools.extrude_x_z(user, pos, -1, nodeInfo, false, false, dir, tools.intensity[user:get_player_name()]);
+      building_tools.extrude_x_z(user, pos, -1, nodeInfo, false, false, dir, tools.intensity[user:get_player_name()], true);
     end
   end
 })
