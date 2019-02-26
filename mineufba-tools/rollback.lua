@@ -100,11 +100,17 @@ minetest.register_chatcommand("undo", {
 
 rollback.reset_changes = function (player)
 	
-	if (rollback[player:get_player_name()].count < rollback[player:get_player_name()].min) then return end
+	local name = player:get_player_name()
+
+	if (rollback[player:get_player_name()].count < rollback[player:get_player_name()].min) then 
+	
+		minetest.chat_send_player(name, "Nothing to undo")
+		return 
+		
+	end
 
 	local lines = {}
 
-	local name = player:get_player_name()
 
 	for line in io.lines(rollback.logFolder .. name .. "/" .. rollback[player:get_player_name()].count) do
 		lines[#lines + 1] = line
@@ -122,6 +128,8 @@ rollback.reset_changes = function (player)
 
 		minetest.set_node(pos, node)
 	end
+
+	minetest.chat_send_player(name, "Blocks modified: " .. tostring(#lines))
 
 	rollback.clear_file(player)
 end
