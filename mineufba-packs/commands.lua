@@ -128,6 +128,7 @@ minetest.register_chatcommand("packs_remove_item", {
 minetest.register_chatcommand("packs_get", {
 	params = "Pack name",
 	description = "Adds items from pack to inventory.",
+	privs = {mineufba_packs = true},
 
 	func = function(playerName, param)
 
@@ -140,9 +141,63 @@ minetest.register_chatcommand("packs_get", {
 	end,
 })
 
+minetest.register_chatcommand("packs_give", {
+	params = "Player name and pack name",
+	description = "Adds items from pack to player's inventory.",
+	privs = {mineufba_packs = true},
+
+	func = function(playerName, param)
+
+		if (param == "") then
+			minetest.chat_send_player(playerName, "Params not specified")
+			return
+		end	
+
+		words = {}
+		for word in param:gmatch("%s*([^%s]+)%s*") do table.insert(words, word) end
+
+		local playerToGive = words[1]
+		local packToGive = words[2]
+
+		if (playerToGive == nil or packToGive == nil) then
+
+			minetest.chat_send_player(playerName, "Not enough parameters!")
+
+			return
+
+		end
+
+		return packs_api.get_pack(minetest.get_player_by_name(playerToGive), packToGive) 
+	end,
+})
+
+
+minetest.register_chatcommand("packs_give_all", {
+	params = "Pack name",
+	description = "Adds items from pack to all online players inventory.",
+	privs = {mineufba_packs = true},
+
+	func = function(playerName, param)
+
+		if (param == "") then
+			minetest.chat_send_player(playerName, "Params not specified")
+			return
+		end	
+
+		for _,player in ipairs(minetest.get_connected_players()) do
+			
+			local name = player:get_player_name()
+
+			packs_api.get_pack(minetest.get_player_by_name(name), param)
+
+		end 
+	end,
+})
+
 minetest.register_chatcommand("packs_show", {
 	params = "Pack name",
 	description = "List items in pack.",
+	privs = {mineufba_packs = true},
 
 	func = function(playerName, param)
 
