@@ -1,3 +1,8 @@
+modName = "mineufba_preload"
+
+dofile(minetest.get_modpath(modName) .. "/players-list.lua")
+
+
 pos = {x = 2290.0, y = -27.0, z = -3100.0}	
 
 minetest.register_on_newplayer(function(player) 
