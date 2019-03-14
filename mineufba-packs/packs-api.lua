@@ -142,15 +142,24 @@ packs_api.show_pack_content = function (playerName, packName)
 
 	minetest.chat_send_player(playerName, "Pack " .. packName .. ":" )
 	
-	for line in io.lines(packs_api.folderName .. packName) do
+	for line in io.lines(" .. packs_api.folderName .. "  .. packName) do
 
 		minetest.chat_send_player(playerName, line)
 
 	end
 end
 
-packs_api.list_all_packs = function ()
+packs_api.list_all_packs = function (playerName)
 	
+	minetest.chat_send_player(playerName, "Available Packs:")
+	
+	os.execute("ls " .. packs_api.folderName .. " | grep -vE 'default.log' > /tmp/available-packs")
+
+	for line in io.lines("/tmp/available-packs") do
+
+		minetest.chat_send_player(playerName, line)
+
+	end
 end
 
 packs.exists = function (playerName, packName)

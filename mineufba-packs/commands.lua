@@ -28,6 +28,16 @@ minetest.register_chatcommand("packs_destroy", {
 	end,
 })
 
+minetest.register_chatcommand("packs_list", {
+	params = "",
+	description = "List all available packs.",
+	privs = {mineufba_packs = true},
+	func = function(playerName, param)
+
+		return packs_api.list_all_packs(playerName) 
+	end,
+})
+
 minetest.register_chatcommand("packs_add_item", {
 	params = "Pack name and item name",
 	description = "Adds item to pack.",
