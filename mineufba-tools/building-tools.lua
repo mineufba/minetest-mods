@@ -210,8 +210,10 @@ minetest.register_tool(modName .. ":extrude_y", {
       pos = pointed_thing.under
       nodeInfo = minetest.get_node(pos)
 
+      dir = base_functions.getPlayerLookDir(user)
+
       rollback.used_tool(user)
-      building_tools.extrude_y(user, pos, -1, nodeInfo, false, false, tools.intensity[user:get_player_name()], true);
+      building_tools.extrude_y(user, pos, dir.y, nodeInfo, false, false, tools.intensity[user:get_player_name()], true);
     end
   end,
   on_place = function(itemstack, user, pointed_thing)
@@ -219,8 +221,10 @@ minetest.register_tool(modName .. ":extrude_y", {
       pos = pointed_thing.under
       nodeInfo = minetest.get_node(pos)
 
+      dir = base_functions.getPlayerLookDir(user)
+
       rollback.used_tool(user)
-      building_tools.extrude_y(user, pos, 1, nodeInfo, false, false, tools.intensity[user:get_player_name()], true);
+      building_tools.extrude_y(user, pos, -dir.y, nodeInfo, false, false, tools.intensity[user:get_player_name()], true);
     end
   end
 })
