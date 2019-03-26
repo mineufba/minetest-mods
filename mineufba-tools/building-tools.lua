@@ -11,6 +11,18 @@ building_tools.extrude_y = function (player, position, direction, nodeInfo, isSu
   
   if (base_functions.is_pos_air(position) or minetest.get_node(position).name ~= nodeInfo.name) then return end 
 
+  if (first) then
+   
+   local lookDir = base_functions.getPlayerLookDir(player)
+
+   lookDir.x = 0
+   lookDir.y = lookDir.y * -1
+   lookDir.z = 0
+
+   if (not base_functions.hasAirInDirs(position, lookDir)) then return end
+
+  end
+
   p = {x = position.x,
        y = position.y+direction,
        z = position.z}  
@@ -101,6 +113,16 @@ end
 building_tools.extrude_x_z = function (player, position, direction, nodeInfo, isSure, remove, side, loop, first)
 
   if (base_functions.is_pos_air(position) or minetest.get_node(position).name ~= nodeInfo.name) then return end 
+
+  if (first) then
+   
+   local lookDir = base_functions.getPlayerLookDir(player)
+
+   lookDir.y = 0
+
+   if (not base_functions.hasAirInDirs(position, lookDir)) then return end
+
+  end
 
   if (isSure == false) then
 
@@ -224,7 +246,7 @@ minetest.register_tool(modName .. ":extrude_y", {
       dir = base_functions.getPlayerLookDir(user)
 
       rollback.used_tool(user)
-      building_tools.extrude_y(user, pos, -dir.y, nodeInfo, false, false, tools.intensity[user:get_player_name()], true);
+      building_tools.extrude_y(user, pos, -dir.y, nodeInfo, false, false, tools.intensity[user:get_player_name()], true)
     end
   end
 })
