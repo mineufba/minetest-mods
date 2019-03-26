@@ -3,3 +3,5 @@ mineufba-tools/rollback_log/*
 
 mineufba-packs/packs/*
 !mineufba-packs/packs/default.log
+
+mineufba-preload/online-players
