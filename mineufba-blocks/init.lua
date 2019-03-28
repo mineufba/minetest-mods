@@ -39,15 +39,32 @@ minetest.register_node(modName .. ":concreto", {
 minetest.register_alias("cobogo", modName .. ":cobogo")
 
 minetest.register_node(modName .. ":cobogo", {
-    drawtype = "glasslike",
     description = "Cobogo",
+    tiles = {
+        modName .. "_concreto.png",
+        modName .. "_concreto.png",
+        modName .. "_concreto.png",
+        modName .. "_concreto.png",
+        modName .. "_concreto.png",
+        modName .. "_concreto.png"
+    },
+    groups = {oddly_breakable_by_hand = 3},
+    paramtype2 = "facedir",
+    drawtype = "nodebox",
     paramtype = "light",
-    is_ground_content = false,
-    sunlight_propagates = true,
-    tiles = {modName .. "_cobogo.png"},
-
-    groups = {oddly_breakable_by_hand = 3}
-
+    node_box = {
+        type = "fixed",
+        fixed = {
+            {-0.5, -0.5, -0.5, -0.4375, 0.5, 0.5}, -- NodeBox1
+            {-0.25, -0.5, -0.5, -0.1875, 0.5, 0.5}, -- NodeBox2
+            {0, -0.5, -0.5, 0.0625, 0.5, 0.5}, -- NodeBox3
+            {0.25, -0.5, -0.5, 0.3125, 0.5, 0.5}, -- NodeBox4
+            {-0.5, 0.4375, -0.5, 0.5, 0.5, 0.5}, -- NodeBox8
+            {-0.5, 0.1875, -0.5, 0.5, 0.25, 0.5}, -- NodeBox9
+            {-0.5, -0.0625, -0.5, 0.5, 0, 0.5}, -- NodeBox10
+            {-0.5, -0.3125, -0.5, 0.5, -0.25, 0.5}, -- NodeBox11
+        }
+    }
 })
 ------------------------------------------------------------------
 
