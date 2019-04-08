@@ -122,3 +122,91 @@ minetest.register_node(modName .. ":telhado", {
 })
 ------------------------------------------------------------------
 
+-- Corrimao PAF1
+------------------------------------------------------------------
+minetest.register_alias("corrimao_paf1_esq", modName .. ":corrimao_paf1_esq")
+
+minetest.register_node(modName .. ":corrimao_paf1_esq", {
+    description = "Corrimao PAF1 Esquerdo",
+    tiles = {
+        modName .. "_concreto.png",
+        modName .. "_concreto.png",
+        modName .. "_concreto.png",
+        modName .. "_concreto.png",
+        modName .. "_concreto.png",
+        modName .. "_concreto.png"
+    },
+    groups = {oddly_breakable_by_hand = 3},
+    paramtype2 = "facedir",
+    drawtype = "nodebox",
+    paramtype = "light",
+    node_box = {
+        type = "fixed",
+        fixed = {
+            {-0.5, -0.5, 0.375, 0.5, -0.375, 0.5}, -- NodeBox1
+			{-0.5, -0.5, 0.375, -0.375, 0.5, 0.5}, -- NodeBox2
+			{-0.5, -0.5, 0.375, -0.25, 0.375, 0.5}, -- NodeBox8
+			{-0.5, -0.5, 0.375, -0.125, 0.25, 0.5}, -- NodeBox9
+			{-0.5, -0.5, 0.375, 0, 0.125, 0.5}, -- NodeBox10
+			{-0.5, -0.5, 0.375, 0.125, 0, 0.5}, -- NodeBox11
+			{-0.5, -0.5, 0.375, 0.25, -0.125, 0.5}, -- NodeBox12
+			{-0.5, -0.5, 0.375, 0.375, -0.25, 0.5}, -- NodeBox13
+        }
+    }
+})
+
+minetest.register_alias("corrimao_paf1_dir", modName .. ":corrimao_paf1_dir")
+
+minetest.register_node(modName .. ":corrimao_paf1_dir", {
+    description = "Corrimao PAF1 Direito",
+    tiles = {
+        modName .. "_concreto.png",
+        modName .. "_concreto.png",
+        modName .. "_concreto.png",
+        modName .. "_concreto.png",
+        modName .. "_concreto.png",
+        modName .. "_concreto.png"
+    },
+    groups = {oddly_breakable_by_hand = 3},
+    paramtype2 = "facedir",
+    drawtype = "nodebox",
+    paramtype = "light",
+    node_box = {
+        type = "fixed",
+        fixed = {
+            {-0.5, -0.5, 0.375, 0.5, -0.375, 0.5}, -- NodeBox1
+			{0.375, -0.5, 0.375, 0.5, 0.5, 0.5}, -- NodeBox2
+			{0.25, -0.5, 0.375, 0.5, 0.375, 0.5}, -- NodeBox8
+			{0.125, -0.5, 0.375, 0.5, 0.25, 0.5}, -- NodeBox9
+			{-0, -0.5, 0.375, 0.5, 0.125, 0.5}, -- NodeBox10
+			{-0.125, -0.5, 0.375, 0.5, 0, 0.5}, -- NodeBox11
+			{-0.25, -0.5, 0.375, 0.5, -0.125, 0.5}, -- NodeBox12
+			{-0.375, -0.5, 0.375, 0.5, -0.25, 0.5}, -- NodeBox13
+        }
+    }
+})
+
+minetest.register_alias("corrimao_paf1_full", modName .. ":corrimao_paf1_full")
+
+minetest.register_node(modName .. ":corrimao_paf1_full", {
+    description = "Corrimao PAF1 Completo",
+    tiles = {
+        modName .. "_concreto.png",
+        modName .. "_concreto.png",
+        modName .. "_concreto.png",
+        modName .. "_concreto.png",
+        modName .. "_concreto.png",
+        modName .. "_concreto.png"
+    },
+    groups = {oddly_breakable_by_hand = 3},
+    paramtype2 = "facedir",
+    drawtype = "nodebox",
+    paramtype = "light",
+    node_box = {
+        type = "fixed",
+        fixed = {
+            {-0.5, -0.5, 0.375, 0.5, 0.5, 0.5}, -- NodeBox1
+        }
+    }
+})
+------------------------------------------------------------------
