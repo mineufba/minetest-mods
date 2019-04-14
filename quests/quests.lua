@@ -16,10 +16,11 @@ minetest.register_on_joinplayer (function (player)
 	local q1 = quests.add_talk_goal(quest, "Falar com Tonho na cantina", "npcs:tonho", "Talvez depois de um lanchinho seja mais fácil encontrar a sala!", "Agora que matei a fome, posso continuar!")
 	local q2 = quests.add_talk_goal(quest, "Ir para o CEAG", "npcs:ceag", "Se eu pegar o comprovante de matrícula poderei ver a sala!", "Pronto, agora posso ver onde é a sala!")
 	local q3 = quests.add_reach_goal(quest, "Ir para o PAF I", "paf1", "A sala é no PAF 1!", "Cheguei, só falta ir até a sala!")
-	local q3 = quests.add_reach_goal(quest, "Ir para sala 207", "paf1_207", "Agora que sei onde é a sala, posso ir até lá!", "Cheguei!")
+	local q4 = quests.add_reach_goal(quest, "Ir para sala 207", "paf1_207", "Agora que sei onde é a sala, posso ir até lá!", "Cheguei!")
 
 	q2.requires = q1
 	q3.requires = q2
+	q4.requires = q3
 
 	quests.add_quest(name, quest)
 end)
