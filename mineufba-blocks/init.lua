@@ -210,3 +210,29 @@ minetest.register_node(modName .. ":corrimao_paf1_full", {
     }
 })
 ------------------------------------------------------------------
+
+
+minetest.register_alias("guarda_corpo", modName .. ":guarda_corpo")
+
+minetest.register_node(modName .. ":guarda_corpo", {
+    description = "Guarda Corpo",
+    tiles = {
+        modName .. "_concreto.png",
+        modName .. "_concreto.png",
+        modName .. "_concreto.png",
+        modName .. "_concreto.png",
+        modName .. "_concreto.png",
+        modName .. "_concreto.png"
+    },
+    groups = {oddly_breakable_by_hand = 3},
+    paramtype2 = "facedir",
+    drawtype = "nodebox",
+    paramtype = "light",
+    node_box = {
+        type = "fixed",
+        fixed = {
+            {-0.5, -0.375, 0.375, 0.5, 0.5, 0.5}, -- NodeBox1
+        }
+    }
+})
+------------------------------------------------------------------
