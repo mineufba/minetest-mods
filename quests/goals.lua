@@ -105,19 +105,34 @@ end
 -- Process Goals ---------------------------------------------------
 function quests.finish_goal(player, quest, goal)
 	if not(goal.done) then
+		
+		if goal.reward then
+			minetest.get_player_by_name(player):get_inventory():add_item("main", goal.reward)
+
+			if goal.ending then
+
+				quests.show_text(goal.ending, player)
+			else 
+
+				cmsg.push_message_player(minetest.get_player_by_name(player), "[quest] You completed a goal and you got a reward!")
+			end
+
+		else
+			if goal.ending then
+
+				quests.show_text(goal.ending, player)
+			else 
+
+				cmsg.push_message_player(minetest.get_player_by_name(player), "[quest] You completed a goal!")
+			end
+		end
+
 		for i = 1, #quest.goals do
 			if quest.goals[i].requires and quest.goals[i].requires.title == goal.title then
 				if quest.goals[i].description then
 					quests.show_text(quest.goals[i].description, player)
 				end
 			end
-		end
-
-		if goal.reward then
-			minetest.get_player_by_name(player):get_inventory():add_item("main", goal.reward)
-			cmsg.push_message_player(minetest.get_player_by_name(player), goal.ending or "[quest] You completed a goal and you got a reward!")
-		else
-			cmsg.push_message_player(minetest.get_player_by_name(player), goal.ending or "[quest] You completed a goal!")
 		end
 	end
 

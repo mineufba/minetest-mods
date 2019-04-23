@@ -24,13 +24,13 @@ minetest.register_globalstep(function(dtime)
 		
 		local name = player:get_player_name()
 
-		if (messages.players[name] and not messages.players[name].busy) then
+		if (messages.players[name] and messages.players[name].messages:getn() > 0 and not messages.players[name].busy) then
 
 			local text = messages.players[name].messages:pop()
 
 			if (text ~= nil) then
 				
-				formspec.show_message(name, text)
+				formspec.show_message(name, text, messages.players[name].messages:getn() > 0)
 				
 				messages.players[name].busy = true
 
