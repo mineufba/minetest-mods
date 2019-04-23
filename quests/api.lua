@@ -1,10 +1,7 @@
-function quests.show_text(text, player)
+function quests.show_text(text, name)
 	local parts = text:split("\n")
 	for i,txt in ipairs(parts) do
-		minetest.after(2.9*(i-1), function (txt, player)
-			if not(minetest.get_player_by_name(player)) then return end
-			cmsg.push_message_player(minetest.get_player_by_name(player), txt)
-		end, txt, player)
+		messages.send_messages(name, txt);
 	end
 end
 
@@ -54,12 +51,12 @@ function quests.has_quest(name, title)
 	return false
 end
 
-function quests.finish_quest(player, quest)
+function quests.finish_quest(name, quest)
 	if not(quest.done) then
 		cmsg.push_message_player(minetest.get_player_by_name(player), "[quest] You completed " .. quest.title)
 	end
 	quest.done = true
 	if quests.callback then
-		quests.callback(minetest.get_player_by_name(player))
+		quests.callback(minetest.get_player_by_name(name))
 	end
 end
