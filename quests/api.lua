@@ -53,7 +53,7 @@ end
 
 function quests.finish_quest(name, quest)
 	if not(quest.done) then
-		cmsg.push_message_player(minetest.get_player_by_name(player), "[quest] You completed " .. quest.title)
+		cmsg.push_message_player(minetest.get_player_by_name(name), "[quest] You completed " .. quest.title)
 	end
 	quest.done = true
 	if quests.callback then
