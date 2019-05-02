@@ -15,7 +15,7 @@ function formspec.show_message (name, text, continue)
 		closeTxt = "Close"
 	end
 
-	minetest.after(0.5, function (name, closeTxt)
+	minetest.after(0.1, function (name, closeTxt)
 		minetest.show_formspec(name, name .. ":form",
 	                "size[12,6]"..
 					"tablecolumns[text]"..
