@@ -8,7 +8,7 @@ minetest.register_on_joinplayer(function(player)
 		hud_elem_type = "text",
 		name = "quests",
 		text = "",
-		position = {x = 1, y = 0.2},
+		position = {x = 1, y = 0.4},
 		alignment = {x = -1, y = 1},
 		offset = {x=-10,y=10},
 		number = "0xFFFFFF",
