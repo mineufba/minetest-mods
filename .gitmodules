@@ -10,3 +10,6 @@
 [submodule "areas"]
 	path = areas
 	url = https://github.com/mineufba/areas.git
+[submodule "mylights"]
+	path = mylights
+	url = https://github.com/minetest-mods/mylights.git
