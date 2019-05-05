@@ -101,5 +101,12 @@ function npcs.register_npc(name, def)
 		end
 	end
 
+	def.on_construct = function (pos)
+			
+		local meta = minetest.get_meta(pos)
+
+		meta:set_string("infotext", string.format("%s (Botão direito para falar)", def.description))
+
+	end
 	minetest.register_node(name, def)	
 end
