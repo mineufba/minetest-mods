@@ -49,14 +49,14 @@ minetest.register_on_respawnplayer(function(player)
 
 -- 	end)
 
--- minetest.register_on_placenode(function(pos, newnode, placer, oldnode, itemstack, pointed_thing)
+minetest.register_on_placenode(function(pos, newnode, placer, oldnode, itemstack, pointed_thing)
 
--- 		if (itemstack ~= nil) then
+		if (itemstack ~= nil) then
 			
--- 			itemstack:set_count(1)
+			itemstack:set_count(50)
 
--- 		end
+		end
 
--- 		return true
+		return true
 
--- 	end)
+	end)
